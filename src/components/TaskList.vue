@@ -1,69 +1,20 @@
 <template>
-  <div class="list-items">
-    <template v-if="loading">
-      <div
-        v-for="n in 6"
-        :key="n"
-        class="loading-item"
-      >
-        <span class="glow-checkbox"></span>
-        <span class="glow-text">
-          <span>Loading</span> <span>cool</span> <span>state</span>
-        </span>
-      </div>
-    </template>
-
-    <template v-else-if="isEmpty">
-      <div class="wrapper-message">
-        <span class="icon-check"></span>
-        <p class="title-message">You have no tasks</p>
-        <p class="subtitle-message">Sit back and relax</p>
-      </div>
-    </template>
-
-    <template v-else>
-      <Task
-        v-for="task in tasksInOrder"
-        :key="task.id"
-        :task
-        @archive-task="onArchiveTask"
-        @pin-task="onPinTask"
-      />
-    </template>
-  </div>
+  <PureTaskList 
+    :tasks="tasks" 
+    @archive-task="archiveTask"
+    @pin-task="pinTask"
+  />
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import Task from './Task.vue';
+import { computed } from "vue";
+import { useTaskStore } from "@/store";
+import PureTaskList from "./PureTaskList";
 
-const props = defineProps({
-  tasks: {
-    type: Array,
-    required: true,
-    default: () => [],
-  },
-  loading: {
-    type: Boolean,
-    default: false,
-  }
-})
+const store = useTaskStore();
 
-const emits = defineEmits([
-  'archive-task',
-  'pin-task',
-])
+const tasks = computed(() => store.getFilteredTasks);
 
-const isEmpty = computed(() => props.tasks.length === 0);
-
-const tasksInOrder = computed(() => {
-  return [
-    ...props.tasks.filter(task => task.state === 'TASK_PINNED'),
-    ...props.tasks.filter(task => task.state !== 'TASK_PINNED'),
-  ]
-})
-
-const onArchiveTask = (taskId) => emits('archive-task', taskId);
-
-const onPinTask = (taskId) => emits('pin-task', taskId);
+const archiveTask = (task) => store.archiveTask(task);
+const pinTask = (task) => store.pinTask(task);
 </script>
