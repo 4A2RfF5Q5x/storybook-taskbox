@@ -9,7 +9,7 @@
 <script setup>
 import { computed } from "vue";
 import { useTaskStore } from "@/store";
-import PureTaskList from "./PureTaskList";
+import PureTaskList from "@/components/PureTaskList/PureTaskList.vue";
 
 const store = useTaskStore();
 

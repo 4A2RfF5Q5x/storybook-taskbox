@@ -35,7 +35,7 @@
 
 <script setup>
 import { computed } from 'vue';
-import Task from './Task.vue';
+import Task from '@/components/Task/Task.vue';
 
 const props = defineProps({
   tasks: {
