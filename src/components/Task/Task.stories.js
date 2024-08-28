@@ -46,3 +46,15 @@ export const Archived = {
 
 
 
+export const WithLongText = {
+  args:{
+    task:{
+      "id": "1",
+      "state": "TASK_INBOX",
+      "title": "With Controls, QA Engineers, UI Engineers, or any other stakeholder can push the component to the limit! Considering the following example, what would happen to our Task if we added a MASSIVE string?"
+    }
+  }
+};
+
+
+
